@@ -60,7 +60,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Your photo will be save on your phone</string>
+	<string>we need to work with your photo library</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

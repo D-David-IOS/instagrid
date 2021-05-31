@@ -9,42 +9,85 @@ import UIKit
 
 class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
  
+    // add 2 uiSwipeGestureRecogniser : left and up when the app start
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // if the user swipe left, call the function swipedleft
+        let swipedLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.swipedUp))
+        swipedLeft.direction = UISwipeGestureRecognizer.Direction.left
         
-        let swipedUp = UISwipeGestureRecognizer(target: self, action: #selector(self.swipedUp))
+        self.view.addGestureRecognizer(swipedLeft)
+        
+        // if the user swipe up, call the function swipeUp
+        let swipedUp = UISwipeGestureRecognizer(target: self, action: #selector(self.swipedLeft))
         swipedUp.direction = UISwipeGestureRecognizer.Direction.up
         
         self.view.addGestureRecognizer(swipedUp)
+        
     }
 
+    // this function share the current view ( view1, view2 or view3)
+    // the user can save the image or share on another app
+    // if the current orientation is portrait, the current view swipe UP
+    // if the current orientation is landscape, the current view swipe Left
+    // when the share is complete or failed, the view return to .identity
     @objc func share(selectedView : UIView)
     {
-        let screenWidth = view.bounds.height
-        UIView.animate(withDuration: 0.5, animations: {
-        selectedView.transform = CGAffineTransform(translationX: 0, y: -screenWidth)
-        })
-        
-        let renderer = UIGraphicsImageRenderer(size: selectedView.bounds.size)
-        let image = renderer.image { ctx in
-            selectedView.drawHierarchy(in: selectedView.bounds, afterScreenUpdates: true)
+        if UIDevice.current.orientation.isPortrait {
+            let screenWidth = view.bounds.height
+            UIView.animate(withDuration: 0.5, animations: {
+                selectedView.transform = CGAffineTransform(translationX: 0, y: -screenWidth)
+            })
         }
-        let ac = UIActivityViewController(activityItems: [image], applicationActivities: [])
-        ac.completionWithItemsHandler = { (activityType, completed:Bool, returnedItems:[Any]?, error: Error?) in
-            if completed {
-                selectedView.transform = .identity
-            } else {
-                UIView.animate(withDuration: 0.5, animations: {
-                selectedView.transform = .identity
-                })
-            }
-         }
         
-        present(ac, animated: true)
+        if UIDevice.current.orientation.isLandscape{
+            let screenWidth = view.bounds.width
+            UIView.animate(withDuration: 0.5, animations: {
+                selectedView.transform = CGAffineTransform(translationX: -screenWidth, y: 0)
+            })
+        }
+            
+            let renderer = UIGraphicsImageRenderer(size: selectedView.bounds.size)
+            let image = renderer.image { ctx in
+                selectedView.drawHierarchy(in: selectedView.bounds, afterScreenUpdates: true)
+            }
+            let ac = UIActivityViewController(activityItems: [image], applicationActivities: [])
+            ac.completionWithItemsHandler = { (activityType, completed:Bool, returnedItems:[Any]?, error: Error?) in
+                if completed {
+                    selectedView.transform = .identity
+                } else {
+                    UIView.animate(withDuration: 0.5, animations: {
+                    selectedView.transform = .identity
+                    })
+                }
+             }
+            
+            present(ac, animated: true)
+            
     }
 
+    // this function share the current view ( if a view is selected)
+    // swipe left doesn't work here because the orientation is Portrait
     @objc func swipedUp()
     {
+        if !UIDevice.current.orientation.isPortrait {
+
+            if !select1.isHidden {
+                    share(selectedView : view1)
+                } else if !select2.isHidden {
+                    share(selectedView : view2)
+                } else if !select3.isHidden {
+                    share(selectedView : view3)
+                }
+        }
+    }
+
+    // this function share the current view ( if a view is selected)
+    // swipe up doesn't work here because the orientation is Landscape
+    @objc func swipedLeft()
+    {
+        if !UIDevice.current.orientation.isLandscape {
         if !select1.isHidden {
             share(selectedView : view1)
         } else if !select2.isHidden {
@@ -52,20 +95,26 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         } else if !select3.isHidden {
             share(selectedView : view3)
         }
+        }
     }
-
+    
+    // buttonselect can memorise the current button selected
+    // each button is associated with an image
+    // it's used in the function image() for know the image will be changed
     var buttonSelect = -1
     
-    // the 3 view
+    // the 3 view (contains the 3 or 4 images)
     @IBOutlet weak var view1: UIView!
     @IBOutlet weak var view2: UIView!
     @IBOutlet weak var view3: UIView!
     
-    // 3 selects buttons
+    // the 3 images select (behind the 3 image at the bottom)
     @IBOutlet weak var select1: UIImageView!
     @IBOutlet weak var select2: UIImageView!
     @IBOutlet weak var select3: UIImageView!
     
+    // when a view is selected, the 2 other view are hidden
+    // the 2 other select too
     @IBAction func button1Down(_ sender: Any) {
         select1.isHidden = false
         select2.isHidden = true
@@ -75,6 +124,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         view3.isHidden = true
     }
     
+    // when a view is selected, the 2 other view are hidden
+    // the 2 other select too
     @IBAction func button2Down(_ sender: Any) {
         select1.isHidden = true
         select2.isHidden = false
@@ -84,6 +135,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         view3.isHidden = true
     }
     
+    // when a view is selected, the 2 other view are hidden
+    // the 2 other select too
     @IBAction func button3Down(_ sender: Any) {
         select1.isHidden = true
         select2.isHidden = true
@@ -93,6 +146,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         view3.isHidden = false
     }
     
+    // the 3 buttons of the first view
+    // each button associated with an image
     //*****************view1*********************
     @IBOutlet weak var view1Image1: UIImageView!
     @IBOutlet weak var view1Button1: UIButton!
@@ -103,6 +158,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     @IBOutlet weak var view1Image3: UIImageView!
     @IBOutlet weak var view1Button3: UIButton!
     
+    // the 3 buttons of the second view
+    // each button associated with an image
     //*****************view2**********************
     @IBOutlet weak var view2Image1: UIImageView!
     @IBOutlet weak var view2Button1: UIButton!
@@ -113,6 +170,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     @IBOutlet weak var view2Image3: UIImageView!
     @IBOutlet weak var view2Button3: UIButton!
     
+    // the 4 buttons of the first view
+    // each button associated with an image
     //******************view3***********************
     @IBOutlet weak var view3Image1: UIImageView!
     @IBOutlet weak var view3Button1: UIButton!
@@ -126,6 +185,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     @IBOutlet weak var view3Image4: UIImageView!
     @IBOutlet weak var view3Button4: UIButton!
     
+    // when the user presses a button, he can change the current image
+    // if the image is already select, he can change again the image
+    // the button is not hidden, the background is .none and the image is deleted
     //******************view1***********************
     @IBAction func view1Picture1(_ sender: Any) {
         buttonSelect = 1
@@ -142,6 +204,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         image()
     }
     
+    // when the user presses a button, he can change the current image
+    // if the image is already select, he can change again the image
+    // the button is not hidden, the background is .none and the image is deleted
     //******************view2************************
     @IBAction func view2Picture1(_ sender: Any) {
         buttonSelect = 4
@@ -158,6 +223,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         image()
     }
     
+    // when the user presses a button, he can change the current image
+    // if the image is already select, he can change again the image
+    // the button is not hidden, the background is .none and the image is deleted
     //**********************view3************************
     @IBAction func view3Picture1(_ sender: Any) {
         buttonSelect = 7
@@ -180,6 +248,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     }
     
 
+    // this function can select an image from the gallery
     func image(){
             let image = UIImagePickerController()
             image.sourceType = .photoLibrary
@@ -188,7 +257,11 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
             present(image, animated: true)
         }
         
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    // here when the user change the picture :
+    // the backgroundColor become .none, and the picture "+" is deleted
+    // so the button is always present if the user want to change again
+    // if the user doesn't select an image, nothing happens
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
                 switch buttonSelect {
                     case 1 :
