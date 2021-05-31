@@ -274,7 +274,7 @@
                                 </constraints>
                             </view>
                             <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Layout 1" translatesAutoresizingMaskIntoConstraints="NO" id="Leb-2z-jq8">
-                                <rect key="frame" x="40" y="741.33333333333337" width="100.66666666666669" height="100.66666666666663"/>
+                                <rect key="frame" x="40.000000000000007" y="741.33333333333337" width="100.66666666666669" height="100.66666666666663"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Leb-2z-jq8" secondAttribute="height" multiplier="1:1" id="R8p-Ns-7dg"/>
                                     <constraint firstAttribute="width" secondItem="Leb-2z-jq8" secondAttribute="height" multiplier="1:1" id="z41-YN-80J"/>
@@ -292,16 +292,16 @@
                                 </variation>
                             </imageView>
                             <imageView hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Selected" translatesAutoresizingMaskIntoConstraints="NO" id="LbD-GY-Zqj">
-                                <rect key="frame" x="40" y="741.33333333333337" width="100.66666666666669" height="100.66666666666663"/>
+                                <rect key="frame" x="40.000000000000007" y="741.33333333333337" width="100.66666666666669" height="100.66666666666663"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4qU-DW-tX7">
-                                <rect key="frame" x="40" y="741.33333333333337" width="100.66666666666669" height="100.66666666666663"/>
+                                <rect key="frame" x="40.000000000000007" y="741.33333333333337" width="100.66666666666669" height="100.66666666666663"/>
                                 <connections>
                                     <action selector="button1Down:" destination="BYZ-38-t0r" eventType="touchUpInside" id="s7R-me-ehZ"/>
                                 </connections>
                             </button>
                             <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Layout 2" translatesAutoresizingMaskIntoConstraints="NO" id="idM-WR-qed">
-                                <rect key="frame" x="156.66666666666663" y="741.33333333333337" width="100.66666666666666" height="100.66666666666663"/>
+                                <rect key="frame" x="156.66666666666666" y="741.33333333333337" width="100.66666666666666" height="100.66666666666663"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="idM-WR-qed" secondAttribute="height" multiplier="1:1" id="GO5-y8-XbB"/>
                                     <constraint firstAttribute="width" secondItem="idM-WR-qed" secondAttribute="height" multiplier="1:1" id="iZ2-94-OSf"/>
@@ -319,10 +319,10 @@
                                 </variation>
                             </imageView>
                             <imageView hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Selected" translatesAutoresizingMaskIntoConstraints="NO" id="bJo-yV-Wps">
-                                <rect key="frame" x="156.66666666666663" y="741.33333333333337" width="100.66666666666666" height="100.66666666666663"/>
+                                <rect key="frame" x="156.66666666666666" y="741.33333333333337" width="100.66666666666666" height="100.66666666666663"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OZT-IQ-8OA">
-                                <rect key="frame" x="156.66666666666663" y="741.33333333333337" width="100.66666666666666" height="100.66666666666663"/>
+                                <rect key="frame" x="156.66666666666666" y="741.33333333333337" width="100.66666666666666" height="100.66666666666663"/>
                                 <connections>
                                     <action selector="button2Down:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DxE-gZ-HeH"/>
                                 </connections>
@@ -575,18 +575,18 @@
                                 <exclude reference="I3k-O3-Pi7"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="Idh-t2-Yp1"/>
-                                <exclude reference="DPZ-Yy-Vhj"/>
-                                <exclude reference="FS5-E9-u4s"/>
-                                <exclude reference="fbQ-U8-k36"/>
-                                <exclude reference="iSa-Gq-CTh"/>
-                                <exclude reference="zw6-bS-XaN"/>
                                 <exclude reference="pra-65-GKF"/>
                                 <exclude reference="8MG-jh-XLv"/>
                                 <exclude reference="ICq-hl-b20"/>
                                 <exclude reference="PpZ-Vr-HTH"/>
                                 <exclude reference="VYY-0L-pCr"/>
                                 <exclude reference="uUa-U9-ym6"/>
+                                <exclude reference="Idh-t2-Yp1"/>
+                                <exclude reference="DPZ-Yy-Vhj"/>
+                                <exclude reference="FS5-E9-u4s"/>
+                                <exclude reference="fbQ-U8-k36"/>
+                                <exclude reference="iSa-Gq-CTh"/>
+                                <exclude reference="zw6-bS-XaN"/>
                                 <exclude reference="li5-DX-lvm"/>
                                 <exclude reference="6kN-d9-dCz"/>
                                 <exclude reference="e0e-3X-K3g"/>
@@ -616,10 +616,13 @@
                                 <exclude reference="I3k-O3-Pi7"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="pra-65-GKF"/>
+                                <include reference="8MG-jh-XLv"/>
+                                <exclude reference="ICq-hl-b20"/>
+                                <exclude reference="PpZ-Vr-HTH"/>
+                                <include reference="VYY-0L-pCr"/>
+                                <include reference="uUa-U9-ym6"/>
                                 <exclude reference="Idh-t2-Yp1"/>
-                                <exclude reference="8LQ-RP-kyM"/>
-                                <exclude reference="vgV-41-gMz"/>
-                                <exclude reference="LKK-2N-VFh"/>
                                 <include reference="DPZ-Yy-Vhj"/>
                                 <include reference="FS5-E9-u4s"/>
                                 <exclude reference="HJs-B7-RLR"/>
@@ -632,16 +635,13 @@
                                 <exclude reference="lZh-zE-ZoS"/>
                                 <exclude reference="ntV-lP-rpE"/>
                                 <include reference="zw6-bS-XaN"/>
-                                <include reference="pra-65-GKF"/>
-                                <include reference="8MG-jh-XLv"/>
-                                <exclude reference="ICq-hl-b20"/>
-                                <exclude reference="PpZ-Vr-HTH"/>
-                                <include reference="VYY-0L-pCr"/>
-                                <include reference="uUa-U9-ym6"/>
                                 <exclude reference="4OL-OK-HX0"/>
                                 <exclude reference="RlB-ik-C2J"/>
                                 <exclude reference="avw-33-ju9"/>
                                 <include reference="li5-DX-lvm"/>
+                                <exclude reference="8LQ-RP-kyM"/>
+                                <exclude reference="vgV-41-gMz"/>
+                                <exclude reference="LKK-2N-VFh"/>
                                 <include reference="6kN-d9-dCz"/>
                                 <include reference="e0e-3X-K3g"/>
                                 <exclude reference="mZV-8O-OTp"/>

@@ -9,10 +9,98 @@ import UIKit
 
 class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        let swipedLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.swipedLeft))
+        swipedLeft.direction = UISwipeGestureRecognizer.Direction.left
+        
+        self.view.addGestureRecognizer(swipedLeft)
+        
     }
+
+
+    @objc func share()
+    {
+        let renderer = UIGraphicsImageRenderer(size: self.view1.bounds.size)
+        let image = renderer.image { ctx in
+            self.view1.drawHierarchy(in: self.view1.bounds, afterScreenUpdates: true)
+        }
+        let ac = UIActivityViewController(activityItems: [image], applicationActivities: [])
+       
+        present(ac, animated: true)
+    }
+
+    @objc func swipedLeft()
+    {
+        print("gauche")
+      
+        self.view1.transform = CGAffineTransform(translationX: -50, y: 0)
+        
+        share()
+        
+        
+    }
+    
+/*
+    @objc func swipedByUser( _ gesture: UISwipeGestureRecognizer)  {
+        print("ça marche")
+        
+        if !select1.isHidden {
+         
+        UIView.animate(withDuration: 1, animations: {
+            self.view1.transform = CGAffineTransform(translationX: 0, y: -500)
+        })
+          
+        let renderer = UIGraphicsImageRenderer(size: view1.bounds.size)
+        let image = renderer.image { ctx in
+            view1.drawHierarchy(in: view1.bounds, afterScreenUpdates: true)
+        }
+        
+        let ac = UIActivityViewController(activityItems: [image], applicationActivities: [])
+            present(ac, animated: true)
+
+            self.view1.transform = .identity
+            
+        } else if !select2.isHidden {
+            UIView.animate(withDuration: 1, animations: {
+                self.view2.transform = CGAffineTransform(translationX: 0, y: -500)
+            })
+            
+            let renderer = UIGraphicsImageRenderer(size: view2.bounds.size)
+            let image = renderer.image { ctx in
+                view2.drawHierarchy(in: view2.bounds, afterScreenUpdates: true)
+            }
+            
+            let ac = UIActivityViewController(activityItems: [image], applicationActivities: [])
+            present(ac, animated: true)
+            
+            
+            
+        } else if !select3.isHidden {
+            UIView.animate(withDuration: 1, animations: {
+                self.view3.transform = CGAffineTransform(translationX: 0, y: -500)
+            })
+            
+            let renderer = UIGraphicsImageRenderer(size: view3.bounds.size)
+            let image = renderer.image { ctx in
+                view3.drawHierarchy(in: view3.bounds, afterScreenUpdates: true)
+            }
+            
+            let ac = UIActivityViewController(activityItems: [image], applicationActivities: [])
+            present(ac, animated: true)
+            
+        }
+      
+    }
+    */
+    
+    @objc func vue1Identite(){
+        view1.transform = .identity
+    }
+    
     
     var buttonSelect = -1
     
@@ -35,6 +123,12 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         view1.isHidden = false
         view2.isHidden = true
         view3.isHidden = true
+        
+        /*
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipedByUser(_:)))
+        swipeGesture.direction = .up
+        view.addGestureRecognizer(swipeGesture)
+        */
     }
     
     @IBAction func button2Down(_ sender: Any) {
@@ -44,6 +138,12 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         view1.isHidden = true
         view2.isHidden = false
         view3.isHidden = true
+        
+        /*
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipedByUser(_:)))
+        swipeGesture.direction = .up
+        view.addGestureRecognizer(swipeGesture)
+        */
     }
     
     @IBAction func button3Down(_ sender: Any) {
@@ -53,6 +153,12 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         view1.isHidden = true
         view2.isHidden = true
         view3.isHidden = false
+        
+            /*
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipedByUser(_:)))
+        swipeGesture.direction = .up
+        view.addGestureRecognizer(swipeGesture)
+        */
     }
     
     //*****************view1*********************
