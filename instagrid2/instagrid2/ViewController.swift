@@ -8,108 +8,58 @@
 import UIKit
 
 class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
-
-    
-    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let swipedLeft = UISwipeGestureRecognizer(target: self, action: #selector(self.swipedLeft))
-        swipedLeft.direction = UISwipeGestureRecognizer.Direction.left
+        let swipedUp = UISwipeGestureRecognizer(target: self, action: #selector(self.swipedUp))
+        swipedUp.direction = UISwipeGestureRecognizer.Direction.up
         
-        self.view.addGestureRecognizer(swipedLeft)
-        
+        self.view.addGestureRecognizer(swipedUp)
     }
 
-
-    @objc func share()
+    @objc func share(selectedView : UIView)
     {
-        let renderer = UIGraphicsImageRenderer(size: self.view1.bounds.size)
+        let screenWidth = view.bounds.height
+        UIView.animate(withDuration: 0.5, animations: {
+        selectedView.transform = CGAffineTransform(translationX: 0, y: -screenWidth)
+        })
+        
+        let renderer = UIGraphicsImageRenderer(size: selectedView.bounds.size)
         let image = renderer.image { ctx in
-            self.view1.drawHierarchy(in: self.view1.bounds, afterScreenUpdates: true)
+            selectedView.drawHierarchy(in: selectedView.bounds, afterScreenUpdates: true)
         }
         let ac = UIActivityViewController(activityItems: [image], applicationActivities: [])
-       
+        ac.completionWithItemsHandler = { (activityType, completed:Bool, returnedItems:[Any]?, error: Error?) in
+            if completed {
+                selectedView.transform = .identity
+            } else {
+                UIView.animate(withDuration: 0.5, animations: {
+                selectedView.transform = .identity
+                })
+            }
+         }
+        
         present(ac, animated: true)
     }
 
-    @objc func swipedLeft()
+    @objc func swipedUp()
     {
-        print("gauche")
-      
-        self.view1.transform = CGAffineTransform(translationX: -50, y: 0)
-        
-        share()
-        
-        
-    }
-    
-/*
-    @objc func swipedByUser( _ gesture: UISwipeGestureRecognizer)  {
-        print("ça marche")
-        
         if !select1.isHidden {
-         
-        UIView.animate(withDuration: 1, animations: {
-            self.view1.transform = CGAffineTransform(translationX: 0, y: -500)
-        })
-          
-        let renderer = UIGraphicsImageRenderer(size: view1.bounds.size)
-        let image = renderer.image { ctx in
-            view1.drawHierarchy(in: view1.bounds, afterScreenUpdates: true)
-        }
-        
-        let ac = UIActivityViewController(activityItems: [image], applicationActivities: [])
-            present(ac, animated: true)
-
-            self.view1.transform = .identity
-            
+            share(selectedView : view1)
         } else if !select2.isHidden {
-            UIView.animate(withDuration: 1, animations: {
-                self.view2.transform = CGAffineTransform(translationX: 0, y: -500)
-            })
-            
-            let renderer = UIGraphicsImageRenderer(size: view2.bounds.size)
-            let image = renderer.image { ctx in
-                view2.drawHierarchy(in: view2.bounds, afterScreenUpdates: true)
-            }
-            
-            let ac = UIActivityViewController(activityItems: [image], applicationActivities: [])
-            present(ac, animated: true)
-            
-            
-            
+            share(selectedView : view2)
         } else if !select3.isHidden {
-            UIView.animate(withDuration: 1, animations: {
-                self.view3.transform = CGAffineTransform(translationX: 0, y: -500)
-            })
-            
-            let renderer = UIGraphicsImageRenderer(size: view3.bounds.size)
-            let image = renderer.image { ctx in
-                view3.drawHierarchy(in: view3.bounds, afterScreenUpdates: true)
-            }
-            
-            let ac = UIActivityViewController(activityItems: [image], applicationActivities: [])
-            present(ac, animated: true)
-            
+            share(selectedView : view3)
         }
-      
     }
-    */
-    
-    @objc func vue1Identite(){
-        view1.transform = .identity
-    }
-    
-    
+
     var buttonSelect = -1
-    
     
     // the 3 view
     @IBOutlet weak var view1: UIView!
     @IBOutlet weak var view2: UIView!
     @IBOutlet weak var view3: UIView!
-    
     
     // 3 selects buttons
     @IBOutlet weak var select1: UIImageView!
@@ -123,12 +73,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         view1.isHidden = false
         view2.isHidden = true
         view3.isHidden = true
-        
-        /*
-        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipedByUser(_:)))
-        swipeGesture.direction = .up
-        view.addGestureRecognizer(swipeGesture)
-        */
     }
     
     @IBAction func button2Down(_ sender: Any) {
@@ -138,12 +82,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         view1.isHidden = true
         view2.isHidden = false
         view3.isHidden = true
-        
-        /*
-        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipedByUser(_:)))
-        swipeGesture.direction = .up
-        view.addGestureRecognizer(swipeGesture)
-        */
     }
     
     @IBAction func button3Down(_ sender: Any) {
@@ -153,12 +91,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         view1.isHidden = true
         view2.isHidden = true
         view3.isHidden = false
-        
-            /*
-        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipedByUser(_:)))
-        swipeGesture.direction = .up
-        view.addGestureRecognizer(swipeGesture)
-        */
     }
     
     //*****************view1*********************
@@ -172,7 +104,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     @IBOutlet weak var view1Button3: UIButton!
     
     //*****************view2**********************
-        
     @IBOutlet weak var view2Image1: UIImageView!
     @IBOutlet weak var view2Button1: UIButton!
     
@@ -183,7 +114,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     @IBOutlet weak var view2Button3: UIButton!
     
     //******************view3***********************
-    
     @IBOutlet weak var view3Image1: UIImageView!
     @IBOutlet weak var view3Button1: UIButton!
     
@@ -197,8 +127,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     @IBOutlet weak var view3Button4: UIButton!
     
     //******************view1***********************
-    
-    
     @IBAction func view1Picture1(_ sender: Any) {
         buttonSelect = 1
         image()
@@ -215,8 +143,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     }
     
     //******************view2************************
-    
-    
     @IBAction func view2Picture1(_ sender: Any) {
         buttonSelect = 4
         image()
@@ -233,7 +159,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
     }
     
     //**********************view3************************
-    
     @IBAction func view3Picture1(_ sender: Any) {
         buttonSelect = 7
         image()
@@ -254,9 +179,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         image()
     }
     
-    
-    
-    
+
     func image(){
             let image = UIImagePickerController()
             image.sourceType = .photoLibrary
@@ -312,9 +235,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
                         break
                 }
             }
-            
             dismiss(animated: true, completion: nil)
         }
-    
-    
 }
